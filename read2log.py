@@ -11,7 +11,7 @@ path = './go_read2log.txt'
 today = date.today()
 t=time.localtime()
 current_time=time.strftime("_H%H_M%M_S%S",t)
-fn="SL_"+str(today)+current_time+".csv"
+fn="2L_"+str(today)+current_time+".csv"
 f=open(fn,'w',encoding="utf-8")
 start = time.time()
 
@@ -36,7 +36,11 @@ while True:
        array=array0[1:10]+array1[1:10]
     else:
       array=array1[1:10]+array0[1:10]
-      f.write(str(array)+'\n')
+    t_delta = datetime.timedelta(hours=9)
+    JST = datetime.timezone(t_delta, 'JST')
+    now = datetime.datetime.now(JST)
+    d = now.strftime('%Y %m %d %H:%M:%S')
+    f.write(d+","+str(array)+'\n')
   else:
     t_delta = datetime.timedelta(hours=9)
     JST = datetime.timezone(t_delta, 'JST')

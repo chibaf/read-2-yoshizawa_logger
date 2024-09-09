@@ -7,7 +7,7 @@ import os
 
 from read_m5b_class import m5logger
 
-path = './go_read2log.txt'
+path = './go_2log.txt'
 today = date.today()
 t=time.localtime()
 current_time=time.strftime("_H%H_M%M_S%S",t)
@@ -20,7 +20,7 @@ ser1=serial.Serial("/dev/ttyUSB1",115200)
 sport0=m5logger()
 sport1=m5logger()
 
-fl=open("read2log_log.txt",'a',encoding="utf-8")
+fl=open("2log_log.txt",'a',encoding="utf-8")
 t_delta = datetime.timedelta(hours=9)
 JST = datetime.timezone(t_delta, 'JST')
 now = datetime.datetime.now(JST)
@@ -49,6 +49,7 @@ while True:
     ttime=time.time()-start
     if ttime<0.001:
       ttime=0.0
+    ttime=round(ttime,5)
     f.write(d+","+str(ttime)+","+str(temps)+'\n')
   else:
     t_delta = datetime.timedelta(hours=9)

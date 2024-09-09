@@ -5,7 +5,7 @@ import serial
 import datetime
 import os
 
-from read_m5_class import m5logger
+from read_m5b_class import m5logger
 
 path = './go_read2log.txt'
 today = date.today()
@@ -32,10 +32,20 @@ while True:
   if is_file:
     array0=sport0.read_logger(ser0)
     array1=sport1.read_logger(ser1)
+#    print(len(array0))
+#    print(len(array0[0:11]))
     if array0[0]=='01':
-       array=array0[1:10]+array1[1:10]
+      array=array0[1:11]+array1[1:11]
+#      print(array)
+    elif array0[0]=='02':
+      array=array1[1:11]+array0[1:11]
+#      print(array)
     else:
-      array=array1[1:10]+array0[1:10]
+      array=[0.0]*20;
+    temps=""
+    for i in range(0,19):
+      temps=temps+str(array[i])+","
+    temps=temps+str(array[19])
     t_delta = datetime.timedelta(hours=9)
     JST = datetime.timezone(t_delta, 'JST')
     now = datetime.datetime.now(JST)
@@ -43,7 +53,7 @@ while True:
     ttime=time.time()-start
     if ttime<0.001:
       ttime=0.0
-    f.write(d+","+str(ttime)+","+str(array)+'\n')
+    f.write(d+","+str(ttime)+","+str(temps)+'\n')
   else:
     t_delta = datetime.timedelta(hours=9)
     JST = datetime.timezone(t_delta, 'JST')

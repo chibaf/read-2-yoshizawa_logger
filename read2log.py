@@ -32,14 +32,10 @@ while True:
   if is_file:
     array0=sport0.read_logger(ser0)
     array1=sport1.read_logger(ser1)
-#    print(len(array0))
-#    print(len(array0[0:11]))
     if array0[0]=='01':
       array=array0[1:11]+array1[1:11]
-#      print(array)
     elif array0[0]=='02':
       array=array1[1:11]+array0[1:11]
-#      print(array)
     else:
       array=[0.0]*20;
     temps=""

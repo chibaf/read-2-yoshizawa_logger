@@ -40,7 +40,10 @@ while True:
     JST = datetime.timezone(t_delta, 'JST')
     now = datetime.datetime.now(JST)
     d = now.strftime('%Y %m %d %H:%M:%S')
-    f.write(d+","+str(array)+'\n')
+    ttime=time.time()-start
+    if ttime<0.001:
+      ttime=0.0
+    f.write(d+","+str(ttime)+","+str(array)+'\n')
   else:
     t_delta = datetime.timedelta(hours=9)
     JST = datetime.timezone(t_delta, 'JST')

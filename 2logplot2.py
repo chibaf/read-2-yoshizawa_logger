@@ -1,6 +1,5 @@
 from datetime import date
 import time
-import matplotlib.pyplot as plt
 import serial
 import datetime
 import os
@@ -29,9 +28,9 @@ t=time.localtime()
 current_time=time.strftime("_H%H_M%M_S%S",t)
 fn="2L_"+str(today)+current_time+".csv"
 f=open(fn,'w',encoding="utf-8")
-# plot arrary
+# plot class
 splot=mplot(20)
-#
+# initial time
 start = time.time()
 #
 while True:

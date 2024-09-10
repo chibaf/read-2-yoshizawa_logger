@@ -14,7 +14,6 @@ ser1=serial.Serial("/dev/ttyUSB1",115200)
 sport0=m5logger()
 sport1=m5logger()
 
-ts=tstamp.timestamp()
 fl=open("2log_log.txt",'a',encoding="utf-8")
 s1=tstamp.timestamp()+": read2log.py started\n"
 fl.write(s1)
@@ -54,7 +53,7 @@ while True:
 # plot
     splot.plot(array)
   else: # flag not found
-    s1=ts.tstamp()+": read2log.py stopped\n"
+    s1=tstamp.timestamp()+": read2log.py stopped\n"
     fl.write(s1)
     fl.close()
     f.close()

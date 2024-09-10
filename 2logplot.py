@@ -4,17 +4,10 @@ import matplotlib.pyplot as plt
 import serial
 import datetime
 import os
-
+# read logger class
 from read_m5b_class import m5logger
 
-path = './go_2log.txt'
-today = date.today()
-t=time.localtime()
-current_time=time.strftime("_H%H_M%M_S%S",t)
-fn="2L_"+str(today)+current_time+".csv"
-f=open(fn,'w',encoding="utf-8")
-start = time.time()
-
+#read serials
 ser0=serial.Serial("/dev/ttyUSB0",115200)
 ser1=serial.Serial("/dev/ttyUSB1",115200)
 sport0=m5logger()
@@ -27,16 +20,28 @@ now = datetime.datetime.now(JST)
 d = now.strftime('%Y %m %d %H:%M:%S.%f')
 s1=d+": read2log.py started\n"
 fl.write(s1)
+#
+path = './go_2log.txt' # flag file
+#
+today = date.today()
+t=time.localtime()
+current_time=time.strftime("_H%H_M%M_S%S",t)
+fn="2L_"+str(today)+current_time+".csv"
+f=open(fn,'w',encoding="utf-8")
+# plot arrary
 data0=[0]*20
 data=[data0]*10
 x=range(0, 10, 1)
+#
+start = time.time()
+#
 while True:
   t_delta = datetime.timedelta(hours=9)
   JST = datetime.timezone(t_delta, 'JST')
   now = datetime.datetime.now(JST)
   d = now.strftime('%Y %m %d %H:%M:%S.%f')
-  is_file = os.path.isfile(path)
-  if is_file:
+  is_file = os.path.isfile(path) # check flag file
+  if is_file: # file was found
     array0=sport0.read_logger(ser0)
     array1=sport1.read_logger(ser1)
     if array0[0]=='01':
@@ -69,7 +74,7 @@ while True:
       hl.append(tl[i])
     plt.legend(handles=hl)
     plt.pause(0.1)
-  else:
+  else: # flag not found
     s1=d+": read2log.py stopped\n"
     fl.write(s1)
     fl.close()

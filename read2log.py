@@ -24,10 +24,14 @@ fl=open("2log_log.txt",'a',encoding="utf-8")
 t_delta = datetime.timedelta(hours=9)
 JST = datetime.timezone(t_delta, 'JST')
 now = datetime.datetime.now(JST)
-d = now.strftime('%Y %m %d %H:%M:%S')
+d = now.strftime('%Y %m %d %H:%M:%S.%f')
 s1=d+": read2log.py started\n"
 fl.write(s1)
 while True:
+  t_delta = datetime.timedelta(hours=9)
+  JST = datetime.timezone(t_delta, 'JST')
+  now = datetime.datetime.now(JST)
+  d = now.strftime('%Y %m %d %H:%M:%S.%f')
   is_file = os.path.isfile(path)
   if is_file:
     array0=sport0.read_logger(ser0)
@@ -42,20 +46,12 @@ while True:
     for i in range(0,19):
       temps=temps+str(array[i])+","
     temps=temps+str(array[19])
-    t_delta = datetime.timedelta(hours=9)
-    JST = datetime.timezone(t_delta, 'JST')
-    now = datetime.datetime.now(JST)
-    d = now.strftime('%Y %m %d %H:%M:%S')
     ttime=time.time()-start
     if ttime<0.001:
       ttime=0.0
     ttime=round(ttime,5)
     f.write(d+","+str(ttime)+","+str(temps)+'\n')
   else:
-    t_delta = datetime.timedelta(hours=9)
-    JST = datetime.timezone(t_delta, 'JST')
-    now = datetime.datetime.now(JST)
-    d = now.strftime('%Y %m %d %H:%M:%S')
     s1=d+": read2log.py stopped\n"
     fl.write(s1)
     fl.close()
